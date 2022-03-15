@@ -1,0 +1,23 @@
+# This workflow will build a Docker Image for the Participant-Pods of the CPJ
+
+name: Build and Push to Docker.io
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+#    - name: Login to Docker.io
+#      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build User-Container Image
+      run: docker build -t novatec/technologyconsulting-training-usercontainer:latest
+
+    - name: Push Build User-Container Image to Novatec Docker Hub
+      run: docker push novatec/technologyconsulting-training-usercontainer:latest
