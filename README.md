@@ -1,5 +1,5 @@
 # technologyconsulting-training-usercontainer
 
-Diese Repository baut und pusht das Image für die Teilnehmer-Maschinen der CPJ-Schulungsumgebung in das Docker Hub der Novatec.
+This repository builds and pushes the image for the CPJ training environment participant machines to Novatec's Docker Hub.
 
-Der Name des Images ist novatec/technologyconsulting-training-usercontainer
+The name of the image is novatec/technologyconsulting-training-usercontainer
