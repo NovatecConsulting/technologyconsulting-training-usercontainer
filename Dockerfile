@@ -49,7 +49,6 @@ RUN echo alias k=kubectl >> home/novatec/.bashrc \
     && echo alias k=kubectl >> /root/.bashrc
 
 
-# docker build --no-cache -t ratzel921/remote-server:ubuntu .
 # docker build -t ratzel921/remote-server:ubuntu .
 # docker push ratzel921/remote-server:ubuntu
 
