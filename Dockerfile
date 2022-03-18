@@ -53,5 +53,5 @@ RUN echo alias k=kubectl >> home/novatec/.bashrc \
 # docker build -t ratzel921/remote-server:ubuntu .
 # docker push ratzel921/remote-server:ubuntu
 
-# docker build -t novatec/technologyconsulting-training-usercontainer .
-# docker push novatec/technologyconsulting-training-usercontainer:lastest
+# docker build -t novatec/technologyconsulting-training-usercontainer:latest .
+# docker push novatec/technologyconsulting-training-usercontainer:latest
