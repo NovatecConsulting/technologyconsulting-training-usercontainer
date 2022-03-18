@@ -12,12 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-#    - name: Login to Docker.io
-#      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Build User-Container Image
-      run: docker build -t novatec/technologyconsulting-training-usercontainer:latest .
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
-    - name: Push Build User-Container Image to Novatec Docker Hub
-      run: docker push novatec/technologyconsulting-training-usercontainer:latest
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.TC_SHOWCASE_DOCKERHUB_USER }}
+          password: ${{ secrets.TC_SHOWCASE_DOCKERHUB_PASSWORD }}
+          repository: novatec/technologyconsulting-training-usercontainer
+          tags: latest, ${{ env.SHORT_SHA }}
+          tag_with_sha: true
