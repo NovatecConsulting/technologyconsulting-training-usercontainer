@@ -1,0 +1,28 @@
+# This workflow will build a Docker Image for the Participant-Pods of the CPJ training
+
+name: Build and Push to Docker.io
+
+on:
+  push:
+    branches: [ master, dev/Pipeline_Docker_Build ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.TC_SHOWCASE_DOCKERHUB_USER }}
+          password: ${{ secrets.TC_SHOWCASE_DOCKERHUB_PASSWORD }}
+          repository: novatec/technologyconsulting-training-usercontainer
+          tags: latest, ${{ env.SHORT_SHA }}
+          tag_with_sha: true
