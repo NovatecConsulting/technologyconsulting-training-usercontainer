@@ -1,4 +1,4 @@
-# This workflow will build a Docker Image for the Participant-Pods of the CPJ
+# This workflow will build a Docker Image for the Participant-Pods of the CPJ training
 
 name: Build and Push to Docker.io
 
