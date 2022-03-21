@@ -47,10 +47,3 @@ RUN apt install -y --no-install-recommends curl \
 # Create alias for kubectl command
 RUN echo alias k=kubectl >> home/novatec/.bashrc \
     && echo alias k=kubectl >> /root/.bashrc
-
-
-# docker build -t ratzel921/remote-server:ubuntu .
-# docker push ratzel921/remote-server:ubuntu
-
-# docker build -t novatec/technologyconsulting-training-usercontainer:latest .
-# docker push novatec/technologyconsulting-training-usercontainer:latest
