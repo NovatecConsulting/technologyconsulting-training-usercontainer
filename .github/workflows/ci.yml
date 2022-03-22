@@ -24,6 +24,9 @@ jobs:
           username: ${{ secrets.TC_SHOWCASE_DOCKERHUB_USER }}
           password: ${{ secrets.TC_SHOWCASE_DOCKERHUB_PASSWORD }}
           repository: novatec/technologyconsulting-training-usercontainer
-          build_args: arg_ssh_user=novatec, arg_ssh_user_pw=test, arg_ssh_root_pw=root
+          build_args: |
+            arg_ssh_user=novatec
+            arg_ssh_user_pw=test
+            arg_ssh_root_pw=root
           tags: latest, ${{ env.SHORT_SHA }}
           tag_with_sha: true
