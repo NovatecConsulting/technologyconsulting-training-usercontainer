@@ -9,7 +9,11 @@ ARG arg_ssh_user_pw
 ARG arg_ssh_root_pw
 #ENV env_ssh_root_pw=$arg_ssh_root_pw
 
+RUN echo "arg_ssh_user --> ${arg_ssh_user}"
 
+RUN echo "arg_ssh_user_pw --> ${arg_ssh_user_pw}"
+
+RUN echo "arg_ssh_root_pw --> ${arg_ssh_root_pw}"
 
 # Install nano, ping & docker-compose
 RUN apt-get update \
