@@ -1,13 +1,13 @@
 FROM nestybox/ubuntu-bionic-systemd-docker:latest
 
-ARG arg_ssh_user
-ENV env_ssh_user=$arg_ssh_user
+ARG ssh_user
+ENV env_ssh_user=$ssh_user
 
-ARG arg_ssh_user_pw
-ENV env_ssh_user_pw=$arg_ssh_user_pw
+ARG ssh_user_pw
+ENV env_ssh_user_pw=$ssh_user_pw
 
-ARG arg_ssh_root_pw
-ENV env_ssh_root_pw=$arg_ssh_root_pw
+ARG ssh_root_pw
+ENV env_ssh_root_pw=$ssh_root_pw
 
 
 
