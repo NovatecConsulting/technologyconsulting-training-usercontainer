@@ -24,14 +24,12 @@ RUN apt-get update \
 RUN mkdir /var/run/sshd \
 # Add user ssh_user
     && useradd --create-home --shell /bin/bash ${env_ssh_user} \
-# Set password for user ${ssh_user
+# Set password for user ssh_user
     && echo "${env_ssh_user}:${env_ssh_user_pw}" | chpasswd \
 # Add user ssh_user to the sudo group
     && adduser ${env_ssh_user} sudo \
-# Set password for root user --> user can change to root with 'su' and in
-    && echo "root:${env_ssh_root_pw}" | chpasswd \
 # Disables login via root user with ssh
-    && sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
+    && sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin no/' /etc/ssh/sshd_config \
 # Give the ssh_user user permissions to exec docker
     && usermod -aG docker ${env_ssh_user} \
 # Activates login via ssh with username and password
