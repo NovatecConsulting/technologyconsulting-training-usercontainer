@@ -81,7 +81,6 @@ RUN curl -sS https://webinstall.dev/k9s | bash \
     # Install k9s for novatec user
     && su - novatec \
     && curl -sS https://webinstall.dev/k9s | bash \
-    && export PATH="/home/novatec/.local/bin:$PATH"
-
+    && export PATH="/home/novatec/.local/bin:$PATH" \
 # Remove files necessary for installation, to cut the image size
     && rm -rf /var/lib/apt/lists/*
