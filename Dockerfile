@@ -17,8 +17,11 @@ RUN apt-get update \
     nano \
     iputils-ping \
     docker-compose \
+    git \
+    jq \
+    vim \
 # Remove files necessary for installation, to cut the image size
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
 
 # Config SSH-Server
 RUN mkdir /var/run/sshd \
@@ -34,6 +37,8 @@ RUN mkdir /var/run/sshd \
     && usermod -aG docker ${env_ssh_user} \
 # Activates login via ssh with username and password
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
+# Set the timeout Interval of the ssh connection to 15min
+    && sed -ri 's/#ClientAliveInterval 0/ClientAliveInterval 900/g' /etc/ssh/sshd_config
 # Create .kube dir for ssh_user user and add permission to access the Kubeconfig in there
     && mkdir -p home/${env_ssh_user}/.kube \
     && chown -R ${env_ssh_user} home/${env_ssh_user}/.kube/ \
@@ -49,5 +54,19 @@ RUN apt install -y --no-install-recommends curl \
     && mkdir -p ~/.local/bin/kubectl \
     && mv ./kubectl ~/.local/bin/kubectl \
     && kubectl version --client \
+# Remove files necessary for installation, to cut the image size
+    && rm -rf /var/lib/apt/lists/*
+
+
+# Install wget & helm
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends wget \
+    && wget https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz \
+    && tar xvf helm-v3.4.1-linux-amd64.tar.gz \
+    && mv linux-amd64/helm /usr/local/bin \
+    && rm helm-v3.4.1-linux-amd64.tar.gz \
+    && rm -rf linux-amd64 \
+    && helm version \
+    && apt-get install -y --no-install-recommends tree \
 # Remove files necessary for installation, to cut the image size
     && rm -rf /var/lib/apt/lists/*
