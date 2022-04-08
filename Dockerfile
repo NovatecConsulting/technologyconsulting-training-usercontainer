@@ -38,7 +38,7 @@ RUN mkdir /var/run/sshd \
 # Activates login via ssh with username and password
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
 # Set the timeout Interval of the ssh connection to 15min
-    && sed -ri 's/#ClientAliveInterval 0/ClientAliveInterval 900/g' /etc/ssh/sshd_config
+    && sed -ri 's/#ClientAliveInterval 0/ClientAliveInterval 900/g' /etc/ssh/sshd_config \
 # Create .kube dir for ssh_user user and add permission to access the Kubeconfig in there
     && mkdir -p home/${env_ssh_user}/.kube \
     && chown -R ${env_ssh_user} home/${env_ssh_user}/.kube/ \
