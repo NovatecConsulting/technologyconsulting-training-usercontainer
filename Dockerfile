@@ -19,6 +19,8 @@ RUN apt-get update \
     docker-compose \
     git \
     jq \
+    bash-completion \
+    less \
     vim \
 # Remove files necessary for installation, to cut the image size
     && rm -rf /var/lib/apt/lists/* \
@@ -35,13 +37,14 @@ RUN mkdir /var/run/sshd \
     && sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin no/' /etc/ssh/sshd_config \
 # Give the ssh_user user permissions to exec docker
     && usermod -aG docker ${env_ssh_user} \
+# Change owing of /home/novatec to novatec user \
+    && chown -R ${env_ssh_user} home/${env_ssh_user}/ \
 # Activates login via ssh with username and password
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
 # Set the timeout Interval of the ssh connection to 15min
     && sed -ri 's/#ClientAliveInterval 0/ClientAliveInterval 900/g' /etc/ssh/sshd_config \
 # Create .kube dir for ssh_user user and add permission to access the Kubeconfig in there
     && mkdir -p home/${env_ssh_user}/.kube \
-    && chown -R ${env_ssh_user} home/${env_ssh_user}/.kube/ \
 # Remove files necessary for installation, to cut the image size
     && rm -rf /var/lib/apt/lists/*
 
@@ -68,5 +71,17 @@ RUN apt-get update \
     && rm -rf linux-amd64 \
     && helm version \
     && apt-get install -y --no-install-recommends tree \
+# Remove files necessary for installation, to cut the image size
+    && rm -rf /var/lib/apt/lists/* \
+
+# Install k9s
+RUN curl -sS https://webinstall.dev/k9s | bash \
+    && export PATH="/root/.local/bin:$PATH" \
+
+    # Install k9s for novatec user
+    && su - novatec \
+    && curl -sS https://webinstall.dev/k9s | bash \
+    && export PATH="/home/novatec/.local/bin:$PATH"
+
 # Remove files necessary for installation, to cut the image size
     && rm -rf /var/lib/apt/lists/*
